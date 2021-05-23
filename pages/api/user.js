@@ -7,8 +7,8 @@ import encBase64 from "crypto-js/enc-base64";
 
 // import models
 import User from "../api/models/user";
-// const Company = require("../models/Company");
-// const Review = require("../models/Review");
+import Company from "../api/models/Company";
+import Review from "../api/models/Review";
 
 const handler = async (req, res) => {
     const { email, password, firstName, lastName } = req.body;
