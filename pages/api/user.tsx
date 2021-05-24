@@ -1,4 +1,5 @@
-import connectDB from "../api/middleware/mongodb";
+import connectDB from "./middleware/mongodb";
+import type { NextApiRequest, NextApiResponse } from "next";
 
 // middleware encoding
 import uid2 from "uid2";
@@ -6,11 +7,11 @@ import SHA256 from "crypto-js/sha256";
 import encBase64 from "crypto-js/enc-base64";
 
 // import models
-import User from "../api/models/user";
-import Company from "../api/models/Company";
-import Review from "../api/models/Review";
+import User from "./models/user";
+import Company from "./models/company";
+import Review from "./models/review";
 
-const handler = async (req, res) => {
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const { email, password, firstName, lastName } = req.body;
     try {
         // SIGNUP ROUTE ---
@@ -52,14 +53,12 @@ const handler = async (req, res) => {
                         token: newUser.token,
                     });
                 } else if (user && !user.token) {
-                    const { salt, hash, token } = newAuthentication(password);
+                    const { salt, hash, token } = passwordHash(password);
 
                     // edit user manage login
-                    user.user = {
-                        firstName: firstName,
-                        lastName: lastName,
-                        avatarImageURL: "url à remplir",
-                    };
+                    user.user.firstName = firstName;
+                    user.user.lastName = lastName;
+                    user.user.avatarImageURL = "url à remplir";
                     user.salt = salt;
                     user.hash = hash;
                     user.token = token;

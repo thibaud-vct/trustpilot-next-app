@@ -1,11 +1,12 @@
-import connectDB from "../api/middleware/mongodb";
+import connectDB from "./middleware/mongodb";
+import type { NextApiRequest, NextApiResponse } from "next";
 
 // import models
-import User from "../api/models/user";
-import Company from "../api/models/Company";
-import Review from "../api/models/Review";
+import User from "./models/user";
+import Company from "./models/company";
+import Review from "./models/review";
 
-const handler = async (req, res) => {
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const { email, companyName, website, description } = req.body;
     try {
         // COMPANIES ROUTE ---

@@ -1,26 +1,27 @@
-import connectDB from "../api/middleware/mongodb";
+import connectDB from "../middleware/mongodb";
 
 // import models
-import User from "../api/models/user";
+import User from "../models/user";
 
 const isAuthenticated = async (authorization) => {
     try {
         if (authorization) {
             const token = authorization.replace("Bearer ", "");
             const user = await User.findOne({ token: token }).select(
-                "email user company token"
+                "email user company token _id"
             );
 
             if (user) {
                 return user;
             } else {
-                res.status(401).json({ message: "unauthorized" });
+                return undefined;
             }
         } else {
-            res.status(401).json({ message: "unauthorized" });
+            return undefined;
         }
     } catch (error) {
-        res.status(400).json({ message: error.message });
+        console.log(error.message);
+        return undefined;
     }
 };
 

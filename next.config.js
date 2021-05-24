@@ -1,5 +1,5 @@
 module.exports = {
     env: {
-        mongodburl: "mongodb://localhost:27017/trustpilot",
+        mongodburl: process.env.MONGODB_URI,
     },
 };
